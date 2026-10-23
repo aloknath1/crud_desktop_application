@@ -1,0 +1,25 @@
+{
+  "name": "crud-desktop-app",
+  "version": "1.0.0",
+  "description": "A simple offline CRUD desktop app built with React and Electron",
+  "main": "electron/main.cjs",
+  "author": "OpenAI",
+  "license": "MIT",
+  "scripts": {
+    "dev": "concurrently -k \"vite --host 127.0.0.1\" \"wait-on http://127.0.0.1:5173 && electron .\"",
+    "build": "vite build",
+    "start": "electron .",
+    "dist:win": "npm run build && electron-builder --win nsis",
+    "dist:linux": "npm run build && electron-builder --linux AppImage"
+  },
+  "dependencies": { "@vitejs/plugin-react": "latest", "vite": "latest", "react": "latest", "react-dom": "latest" },
+  "devDependencies": { "electron": "latest", "electron-builder": "latest", "concurrently": "latest", "wait-on": "latest" },
+  "build": {
+    "appId": "com.openai.cruddesktop",
+    "productName": "CRUD Desktop",
+    "directories": { "output": "release" },
+    "files": ["dist/**/*", "electron/**/*", "package.json"],
+    "win": { "target": [{ "target": "nsis", "arch": ["x64"] }] },
+    "nsis": { "oneClick": false, "allowToChangeInstallationDirectory": true, "createDesktopShortcut": true, "createStartMenuShortcut": true }
+  }
+}
